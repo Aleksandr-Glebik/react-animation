@@ -4,7 +4,8 @@ import { motion } from "framer-motion"
 const Button = (props) => {
     const {
         text,
-        handleClick = Function.prototype
+        handleClick = Function.prototype,
+        isSelected,
     } = props
 
        return (
@@ -19,17 +20,42 @@ const Button = (props) => {
                 backgroundColor: '#ccc'
             }}
         >
-            {text}
+            {isSelected && <BgSelected />}
+            <motion.span
+                animate={{color: isSelected ? '#fff' : '#000'}}
+                style={{position: 'relative'}}
+            >
+                {text}
+            </motion.span>
         </motion.button>
     )
 }
+
+
+export default Button
 
 const btnStyle = {
     border: 'none',
     outline: 'none',
     padding: '12px 16px',
-    backgroundColor: '#f1f1f1',
-    cursor: 'pointer'
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+    position: 'relative'
 }
 
-export default Button
+const BgSelected = () => {
+    return (
+        <motion.div
+            layoutId="activeMenuItem"
+            style={{
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                backgroundColor: 'blue',
+                zIndex: 0
+            }}
+        />
+    )
+}

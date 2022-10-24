@@ -4,6 +4,7 @@ import Button from "./Button"
 
 const Filter = ({data}) => {
     const [cards, setCards] = useState(data)
+    const [selected, setSelected] = useState(0)
 
     const buttons = data.reduce( (acc, el) => {
         if (acc.includes(el.category)) return acc
@@ -21,20 +22,21 @@ const Filter = ({data}) => {
             <motion.div
                 layout
             >
-                <div>
+                <motion.div style={{backgroundColor: '#f1f1f1'}}>
                     {
-                        buttons.map( btn => (
+                        buttons.map( (btn, ind) => (
                             <Button key={btn}
                                     text={btn}
-                                    handleClick={() => handleFilter(btn)}
+                                    handleClick={() => {handleFilter(btn); setSelected(ind)}}
+                                    isSelected={selected === ind}
                             />
 
                         ))
                     }
-                </div>
+                </motion.div>
                 <motion.div
                   layout
-                  style={{overflow: 'hidden', maxWidth: 400, border: '3px solid #eee'}}
+                  style={{overflow: 'hidden', maxWidth: 416, border: '3px solid #eee'}}
                 >
                     <AnimatePresence initial={false} exitBeforeEnter>
                     {
