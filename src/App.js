@@ -1,28 +1,18 @@
 import './App.css'
+import TheHeader from './components/TheHeader'
 
-import { useState } from 'react'
-import { CreateTodo } from './components/CreateTodo'
-import { Todos } from './components/Todos'
-
-const defaultTodos = [
-  {id: 1, title: 'Learne Framer Motion', completed: false},
-  {id: 2, title: 'Create nice animation', completed: false},
-  {id: 3, title: 'Use Reorder component', completed: false},
-]
 
 function App() {
-  const [todos, setTodos] = useState(defaultTodos)
-
-  const onRemove = (id) => {
-    setTodos(
-      todos.filter(todo => todo.id !== id)
-    )
-  }
-
    return (
-    <div className="App">
-      <CreateTodo onCreate={setTodos} />
-      <Todos todos={todos} setTodos={setTodos} onRemove={onRemove}/>
+    <div style={{position: 'relative'}}>
+      <TheHeader />
+      <div className="section" style={{backgroundColor: 'maroon'}}>
+        <h1>Hello StackBlitz!</h1>
+        <p>Start edition to see some magic happen :)</p>
+      </div>
+      <div className="section" style={{backgroundColor: 'peru'}}>
+        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words,
+      </div>
     </div>
   )
 }
