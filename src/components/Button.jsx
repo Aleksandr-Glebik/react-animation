@@ -9,6 +9,7 @@ const Button = (props) => {
 
        return (
         <motion.button
+            layout
             onClick={handleClick}
             style={btnStyle}
             whileHover={{

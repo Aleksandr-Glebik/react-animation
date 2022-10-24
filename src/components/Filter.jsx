@@ -1,52 +1,61 @@
 import React, {useState} from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, AnimateSharedLayout } from "framer-motion"
 import Button from "./Button"
 
 const Filter = ({data}) => {
-    const [cards, setCards] = useState(data.filter(el => el.category === 'cars'))
+    const [cards, setCards] = useState(data)
 
     const buttons = data.reduce( (acc, el) => {
         if (acc.includes(el.category)) return acc
 
         return [...acc, el.category]
-    }, [])
+    }, ['all'])
 
     const handleFilter = (selector) => {
+        if (selector === 'all') return setCards(data)
         setCards(data.filter(el => el.category === selector))
     }
 
     return (
-        <div>
-            <div>
-                {
-                    buttons.map( btn => (
-                        <Button key={btn}
-                                text={btn}
-                                handleClick={() => handleFilter(btn)}
-                        />
+        <AnimateSharedLayout>
+            <motion.div
+                layout
+            >
+                <div>
+                    {
+                        buttons.map( btn => (
+                            <Button key={btn}
+                                    text={btn}
+                                    handleClick={() => handleFilter(btn)}
+                            />
 
-                    ))
-                }
-            </div>
-            <div style={{overflow: 'hidden', maxWidth: 400}}>
-                <AnimatePresence initial={false} exitBeforeEnter>
-                {
-                    cards.map( card => (
-                        <motion.div
-                            key={card.title}
-                            style={boxStyle}
-                            initial={{opacity: 0}}
-                            animate={{opacity: 1}}
-                            exit={{opacity: 0}}
-                            // transition={{duration: 2}}
-                        >
-                            {card.title}
-                        </motion.div>
-                    ))
-                }
-                </AnimatePresence>
-            </div>
-        </div>
+                        ))
+                    }
+                </div>
+                <motion.div
+                  layout
+                  style={{overflow: 'hidden', maxWidth: 400, border: '3px solid #eee'}}
+                >
+                    <AnimatePresence initial={false} exitBeforeEnter>
+                    {
+                        cards.map( card => (
+                            <motion.div
+                                layout
+                                key={card.title}
+                                style={boxStyle}
+                                initial={{opacity: 0}}
+                                animate={{opacity: 1}}
+                                exit={{opacity: 0}}
+                                // transition={{duration: 2}}
+                            >
+                                {card.title}
+                            </motion.div>
+                        ))
+                    }
+                    </AnimatePresence>
+                </motion.div>
+            </motion.div>
+        </AnimateSharedLayout>
     )
 }
 

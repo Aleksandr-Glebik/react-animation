@@ -32,7 +32,15 @@ export const data = [
         title: 'Lemon'
     },
     {
+        category: 'fruits',
+        title: 'Orange'
+    },
+    {
         category: 'cars',
         title: 'Ford'
+    },
+    {
+        category: 'cars',
+        title: 'Citroen'
     },
 ]
