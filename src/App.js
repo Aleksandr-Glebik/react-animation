@@ -1,18 +1,21 @@
 import './App.css'
-// import Collapsible from './components/Collapsible'
-import Filter from './components/Filter'
-import {data} from './data'
-import Menu from './components/Menu'
+
+import { useState } from 'react'
+import { CreateTodo } from './components/CreateTodo'
+import { Todos } from './components/Todos'
+
+const defaultTodos = [
+  {id: 1, title: 'Learne Framer Motion', completed: false},
+  {id: 2, title: 'Create nice animation', completed: false},
+  {id: 3, title: 'Use Reorder component', completed: false},
+]
 
 function App() {
+  const [todos, setTodos] = useState(defaultTodos)
    return (
     <div className="App">
-      {/* <Collapsible title='Toggle content'>
-        <p>What is Lorem Ipsum?</p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,
-      </Collapsible> */}
-      <Filter data={data} />
-      {/* <Menu /> */}
+      <CreateTodo onCreate={setTodos} />
+      <Todos todos={todos} />
     </div>
   )
 }
