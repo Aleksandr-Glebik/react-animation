@@ -1,32 +1,39 @@
 import './App.css'
-import React, { useState, } from 'react'
-import { useSpring, animated, config } from 'react-spring'
+import React, { useState } from 'react'
+import { useTrail, animated } from 'react-spring'
+
+const items = ['Lorem', 'ipsum', 'dolor', 'sit']
+const config = {mass: 5, tension: 2000, friction: 200}
 
 function App() {
-  const [flipped, setFlipped] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const {opacity, transform} = useSpring({
-    opacity: flipped ? 1 : 0,
-    transform: `perspective(600px) rotateX(${flipped ? 180 : 0}deg)`,
-    config: config.gentle
+  const trail = useTrail(items.length, {
+    config,
+    opacity: isMenuOpen ? 1 : 0,
+    transform: isMenuOpen ? 'translateX(0px)' : 'translateX(-100px)',
+    form: {
+      opacity: 0,
+      transform: 'translateX(-100px)',
+    }
   })
 
   return (
-    <div onClick={() => setFlipped(!flipped)}>
-      <animated.div
-        style={{
-          opacity: opacity.interpolate(o => 1 - o),
-          transform,
-        }}
-        className={'c back'}
-      />
-      <animated.div
-        style={{
-          opacity,
-          transform: transform.interpolate(t => `${t} rotateX(180deg)`),
-        }}
-        className={'c front'}
-      />
+    <div className='App'>
+      <button
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        Menu
+      </button>
+      {
+        trail.map( (props, index) => (
+        <animated.div
+          key={index}
+          style={{...props}}
+        >
+          {items[index]}
+        </animated.div>))
+      }
     </div>
   )
 }
