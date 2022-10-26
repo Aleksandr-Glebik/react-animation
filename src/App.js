@@ -1,6 +1,6 @@
 import './App.css'
 import React, { useState, useRef } from 'react'
-import { Spring, animated } from 'react-spring'
+import { Spring, Transition, animated } from 'react-spring'
 
 
 
@@ -26,6 +26,20 @@ function App() {
       >
         {(props) => (<animated.h2 style={props} ref={myRef}>Start learn this libraries</animated.h2>)}
       </Spring>
+
+      <Transition
+        items={isVisible}
+        enter={{opacity: 1, transform: 'translateY(0rem)'}}
+        leave={{opacity: 0, transform: 'translateY(-2rem)'}}
+        from={{opacity: 0, transform: 'translateY(-2rem)'}}
+        config={{duration: 1000}}
+        reverse={!isVisible}
+      >
+        {(props, item) =>
+        item &&
+          <animated.h2 style={props}>Start learn this libraries</animated.h2>
+        }
+      </Transition>
     </div>
   )
 }
